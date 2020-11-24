@@ -1,45 +1,42 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react'
+import Loading from './Loading'
 
-class PokemonCard extends React.Component {
-  constructor() {
-    super()
-    this.state = {
-      pokemons: [],
-      pokemonDetails: [],
-    }
-  }
+const PokemonCard = () => {
+  const [pokemonDetails, setPokemonDetails] = useState([])
+  const [isLoading, setLoading] = useState(true)
 
-  componentDidMount() {
-    let url ='https://pokeapi.co/api/v2/pokemon?limit=9'
+  useEffect(() => {
+    let url = 'https://pokeapi.co/api/v2/pokemon?limit=9'
 
+    let temp = []
     fetch(url)
-      .then(res => res.json())
-      .then(data => {
-        if(data) {
-          this.setState({pokemons: data.results}, () => {
-            this.state.pokemons.map(pokemon => {
-              fetch(pokemon.url)
-              .then(res => res.json())
-              .then(data => {
-                if(data) {
-                  let temp = this.state.pokemonDetails
-                  temp.push(data)
-                  this.setState({pokemonDetails: temp})
-                }
-              })
+      .then(res => res.json()
+      )
+      .then(({results}) => {
+        results.map(pokemon => {
+          fetch(pokemon.url)
+            .then(res => res.json())
+            .then(data => {
+              temp.push(data)
+              setTimeout(() => {
+                setPokemonDetails(temp)
+                setLoading(false)
+              }, 3000)
+            })
+            .catch(err => {
+              console.log(err);
             })
           })
-        }
+      })
+      .catch(err => {
+        console.log(err);
       })
     
-    console.log(this.state.pokemonDetails);
-  }
+  }, [])
 
-  render() {
-    const {pokemonDetails} = this.state;
-    const pokemons = pokemonDetails.map((pokemon) => {
-      return (
-        <div className="card text-center mx-auto" key={pokemon.id}>
+  const pokemonData = pokemonDetails.map((pokemon) => {
+    return (
+      <div className="card text-center mx-auto" key={pokemon.id}>
         <div className="card-header"><b>{pokemon.name}</b></div>
         <div className="card-body">          
           <h6 className="card-subtitle mb-2 text-muted">Height: {pokemon.height}</h6>  
@@ -49,17 +46,22 @@ class PokemonCard extends React.Component {
           </a>
         </div>
       </div>
-      );
-    });
-    
+    )
+  })
+
+  if(isLoading) {
     return (
-      <div className="container">
-        <div className="card-columns">
-          {pokemons}
-        </div>
-      </div>
-    );
+      <Loading></Loading>
+    )
   }
+
+  return (
+    <div className="container">
+      <div className="card-columns">
+        {pokemonData}
+      </div>
+    </div>
+  )
 }
 
 export default PokemonCard
