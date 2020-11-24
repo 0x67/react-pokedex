@@ -1,5 +1,4 @@
 import React from 'react';
-import {PlusIcon} from '@primer/octicons-react'
 
 class PokemonCard extends React.Component {
   constructor() {
@@ -45,7 +44,9 @@ class PokemonCard extends React.Component {
         <div className="card-body">          
           <h6 className="card-subtitle mb-2 text-muted">Height: {pokemon.height}</h6>  
           <h6 className="card-subtitle mb-2 text-muted">Weight: {pokemon.weight}</h6>  
-          <img src={pokemon.sprites.front_default} alt="Pokemon" />
+          <a target="_blank" href={pokemon.sprites.front_default} rel="noopener noreferrer">
+            <img className="img-thumbnail" src={pokemon.sprites.front_default} alt="Pokemon" />
+          </a>
         </div>
       </div>
       );
@@ -53,11 +54,6 @@ class PokemonCard extends React.Component {
     
     return (
       <div className="container">
-        <div className="card-header">
-          <button className="btn">
-            <span><PlusIcon verticalAlign='middle' /></span>
-          </button>
-        </div>
         <div className="card-columns">
           {pokemons}
         </div>
