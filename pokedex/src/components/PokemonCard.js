@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Loading from './Loading'
+import PokemonDetails from './PokemonDetails'
 
 const PokemonCard = () => {
   const [pokemonDetails, setPokemonDetails] = useState([])
@@ -12,7 +13,7 @@ const PokemonCard = () => {
     fetch(url)
       .then(res => res.json()
       )
-      .then(({results}) => {
+      .then(({ results }) => {
         results.map(pokemon => {
           fetch(pokemon.url)
             .then(res => res.json())
@@ -21,7 +22,7 @@ const PokemonCard = () => {
               setTimeout(() => {
                 setPokemonDetails(temp)
                 setLoading(false)
-              }, 3000)
+              }, 2500)
             })
             .catch(err => {
               console.log(err);
@@ -39,11 +40,11 @@ const PokemonCard = () => {
       <div className="card text-center mx-auto" key={pokemon.id}>
         <div className="card-header"><b>{pokemon.name}</b></div>
         <div className="card-body">          
-          <h6 className="card-subtitle mb-2 text-muted">Height: {pokemon.height}</h6>  
-          <h6 className="card-subtitle mb-2 text-muted">Weight: {pokemon.weight}</h6>  
-          <a target="_blank" href={pokemon.sprites.front_default} rel="noopener noreferrer">
-            <img className="img-thumbnail" src={pokemon.sprites.front_default} alt="Pokemon" />
-          </a>
+          <h6 className="card-subtitle mb-2 text-muted">HP: {pokemon.stats[0].base_stat}</h6> 
+          <h6 className="card-subtitle mb-2 text-muted">Attack: {pokemon.stats[1].base_stat}</h6>
+          <h6 className="card-subtitle mb-2 text-muted">Defense: {pokemon.stats[2].base_stat}</h6>
+          <h6 className="card-subtitle mb-2 text-muted">Speed: {pokemon.stats[3].base_stat}</h6>  
+          <PokemonDetails pokemon={pokemon}/>
         </div>
       </div>
     )
@@ -51,7 +52,7 @@ const PokemonCard = () => {
 
   if(isLoading) {
     return (
-      <Loading></Loading>
+      <Loading/>
     )
   }
 

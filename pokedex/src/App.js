@@ -1,13 +1,10 @@
 import React from 'react'
 import PokemonCard from './components/PokemonCard'
 
-class App extends React.Component {
-
-  render() {
-    return (
-      <PokemonCard></PokemonCard>
-    )
-  }
+const App = () => {
+  return (
+    <PokemonCard/>
+  )
 }
 
 export default App
