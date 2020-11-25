@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Loading from './Loading'
-import PokemonDetails from './PokemonDetails'
+import { Loading, PokemonDetails} from './'
 
 const PokemonCard = () => {
   const [pokemonDetails, setPokemonDetails] = useState([])
