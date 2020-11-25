@@ -1,65 +1,68 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react'
+import Loading from './Loading'
+import PokemonDetails from './PokemonDetails'
 
-class PokemonCard extends React.Component {
-  constructor() {
-    super()
-    this.state = {
-      pokemons: [],
-      pokemonDetails: [],
-    }
-  }
+const PokemonCard = () => {
+  const [pokemonDetails, setPokemonDetails] = useState([])
+  const [isLoading, setLoading] = useState(true)
 
-  componentDidMount() {
-    let url ='https://pokeapi.co/api/v2/pokemon?limit=9'
+  useEffect(() => {
+    let url = 'https://pokeapi.co/api/v2/pokemon?limit=9'
 
+    let temp = []
     fetch(url)
-      .then(res => res.json())
-      .then(data => {
-        if(data) {
-          this.setState({pokemons: data.results}, () => {
-            this.state.pokemons.map(pokemon => {
-              fetch(pokemon.url)
-              .then(res => res.json())
-              .then(data => {
-                if(data) {
-                  let temp = this.state.pokemonDetails
-                  temp.push(data)
-                  this.setState({pokemonDetails: temp})
-                }
-              })
+      .then(res => res.json()
+      )
+      .then(({ results }) => {
+        results.map(pokemon => {
+          fetch(pokemon.url)
+            .then(res => res.json())
+            .then(data => {
+              temp.push(data)
+              setTimeout(() => {
+                setPokemonDetails(temp)
+                setLoading(false)
+              }, 2500)
+            })
+            .catch(err => {
+              console.log(err);
             })
           })
-        }
+      })
+      .catch(err => {
+        console.log(err);
       })
     
-    console.log(this.state.pokemonDetails);
-  }
+  }, [])
 
-  render() {
-    const {pokemonDetails} = this.state;
-    const pokemons = pokemonDetails.map((pokemon) => {
-      return (
-        <div className="card text-center mx-auto" key={pokemon.id}>
+  const pokemonData = pokemonDetails.map((pokemon) => {
+    return (
+      <div className="card text-center mx-auto" key={pokemon.id}>
         <div className="card-header"><b>{pokemon.name}</b></div>
         <div className="card-body">          
-          <h6 className="card-subtitle mb-2 text-muted">Height: {pokemon.height}</h6>  
-          <h6 className="card-subtitle mb-2 text-muted">Weight: {pokemon.weight}</h6>  
-          <a target="_blank" href={pokemon.sprites.front_default} rel="noopener noreferrer">
-            <img className="img-thumbnail" src={pokemon.sprites.front_default} alt="Pokemon" />
-          </a>
+          <h6 className="card-subtitle mb-2 text-muted">HP: {pokemon.stats[0].base_stat}</h6> 
+          <h6 className="card-subtitle mb-2 text-muted">Attack: {pokemon.stats[1].base_stat}</h6>
+          <h6 className="card-subtitle mb-2 text-muted">Defense: {pokemon.stats[2].base_stat}</h6>
+          <h6 className="card-subtitle mb-2 text-muted">Speed: {pokemon.stats[3].base_stat}</h6>  
+          <PokemonDetails pokemon={pokemon}/>
         </div>
       </div>
-      );
-    });
-    
+    )
+  })
+
+  if(isLoading) {
     return (
-      <div className="container">
-        <div className="card-columns">
-          {pokemons}
-        </div>
-      </div>
-    );
+      <Loading/>
+    )
   }
+
+  return (
+    <div className="container">
+      <div className="card-columns">
+        {pokemonData}
+      </div>
+    </div>
+  )
 }
 
 export default PokemonCard
