@@ -132,7 +132,7 @@ body {
   }
 }
 
-svg {
+.loadingAnimation {
   width: 300px;
   animation: animationFrames ease-in-out 1.2s;
   animation-delay: 0.05s;
@@ -147,6 +147,11 @@ svg {
   100% {
     transform: rotate(-720deg);
   }
+}
+
+.card-header a {
+  align-items: flex-end;
+  float: right;
 }
 
 /* Circle Rulers
