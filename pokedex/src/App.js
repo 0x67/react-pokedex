@@ -1,9 +1,18 @@
 import React from 'react'
-import PokemonCard from './components/PokemonCard'
+import { Switch, Route, Link } from "react-router-dom";
+import { DetailPage, Home} from './pages';
 
 const App = () => {
   return (
-    <PokemonCard/>
+    <Switch>
+      <Route exact path='/'>
+        <Home/>
+      </Route>
+      
+      <Route path='/pokemon/:id'>
+        <DetailPage/>
+      </Route>
+    </Switch>
   )
 }
 

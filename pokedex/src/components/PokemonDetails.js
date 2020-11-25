@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
+import { useHistory, useRouteMatch } from "react-router-dom";
 
 const PokemonDetails = (props) => {
   const [pokemonDetails, setPokemonDetails] = useState([])
+  const history = useHistory()
 
   useEffect(() => {
     let url = `https://pokeapi.co/api/v2/pokemon/${props.pokemon.id}/`
@@ -20,6 +22,9 @@ const PokemonDetails = (props) => {
     
   }, [])
   
+  function getDetail(id) {
+    history.push(`/pokemon/${props.pokemon.id}`)
+  }
   /*
   Modal ada diluar parent
 
@@ -42,10 +47,10 @@ const PokemonDetails = (props) => {
             </button>
           </div>
           <div className="modal-body">
-            {props.pokemon.name}
           </div>
           <div className="modal-footer">
-            <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button onClick={() => getDetail(props.pokemon.id)} type="button" className="btn btn-secondary" data-dismiss="modal">View on Poképedia</button>
+            <button type="button" className="btn btn-info" data-dismiss="modal">Close</button>
           </div>
           </div>
         </div>
