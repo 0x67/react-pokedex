@@ -23,7 +23,7 @@ const PokemonDetails = (props) => {
   }, [])
   
   const getDetail = (id) => {
-    history.push(`/pokemon/${props.pokemon.id}`)
+    history.push(`/pokemon/${id}`)
   }
   /*
   Modal ada diluar parent
