@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useHistory, useRouteMatch } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const PokemonDetails = (props) => {
   const [pokemonDetails, setPokemonDetails] = useState([])
@@ -22,7 +22,7 @@ const PokemonDetails = (props) => {
     
   }, [])
   
-  function getDetail(id) {
+  const getDetail = (id) => {
     history.push(`/pokemon/${props.pokemon.id}`)
   }
   /*
@@ -31,7 +31,7 @@ const PokemonDetails = (props) => {
   button on click open modal bawa props id
   jadi fetch ulang
   */
-  console.log(props, 'ini props')
+ 
   return (
     <div>
       <a href={props.pokemon.sprites.front_default} rel="noopener noreferrer" data-toggle="modal" data-target={`#exampleModalLong${props.pokemon.id}`}>
