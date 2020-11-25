@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
-// import { useHistory } from "react-router-dom";
 
-import { Loading, PokemonDetails} from './'
+import { PokemonDetails } from './'
 
 const PokemonCard = () => {
   const [pokemonDetails, setPokemonDetails] = useState([])
-  const [isLoading, setLoading] = useState(true)
   const dispatch = useDispatch()
-  // const history = useHistory()
 
   useEffect(() => {
     let url = 'https://pokeapi.co/api/v2/pokemon?limit=9'
@@ -25,8 +22,7 @@ const PokemonCard = () => {
               temp.push(data)
               setTimeout(() => {
                 setPokemonDetails(temp)
-                setLoading(false)
-              }, 2500)
+              }, 400)
             })
             .catch(err => {
               console.log(err);
@@ -51,6 +47,7 @@ const PokemonCard = () => {
       <div className="card text-center mx-auto" key={pokemon.id}>
         <div className="card-header">
           <b>{pokemon.name}</b>
+          {/* onClick={() => addFavorite(pokemon)} */}
           <a href="#" onClick={() => addFavorite(pokemon)}>
             {/* <img src='../assets/img/pokeball.svg'></img> */}
             <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-star" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -68,12 +65,6 @@ const PokemonCard = () => {
       </div>
     )
   })
-
-  if(isLoading) {
-    return (
-      <Loading/>
-    )
-  }
 
   return (
     <div className="container">

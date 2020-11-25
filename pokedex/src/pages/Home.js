@@ -1,9 +1,11 @@
 import React from 'react';  
-import { PokemonCard } from '../components/'
+import { BodyWrapper, PokemonCard} from '../components'
 
 const Home = () => {
   return (
-    <PokemonCard/>
+    <div>
+      <BodyWrapper/>
+    </div>
   )
 }
 
