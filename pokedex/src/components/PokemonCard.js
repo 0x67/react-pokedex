@@ -1,40 +1,18 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux';
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 
 import { PokemonDetails } from './'
 
+import { getAllPokemons } from '../stores';
+
 const PokemonCard = () => {
-  const [pokemonDetails, setPokemonDetails] = useState([])
   const dispatch = useDispatch()
+  const pokemons = useSelector((state) => state.allPokemons)
 
   useEffect(() => {
-    let url = 'https://pokeapi.co/api/v2/pokemon?limit=9'
-
-    let temp = []
-    fetch(url)
-      .then(res => res.json()
-      )
-      .then(({ results }) => {
-        results.map(pokemon => {
-          fetch(pokemon.url)
-            .then(res => res.json())
-            .then(data => {
-              temp.push(data)
-              setTimeout(() => {
-                setPokemonDetails(temp)
-              }, 400)
-            })
-            .catch(err => {
-              console.log(err);
-            })
-          })
-      })
-      .catch(err => {
-        console.log(err);
-      })
-    
+    dispatch(getAllPokemons())
   }, [])
-  
+
   const addFavorite = (pokemon) => {
     dispatch({
       type: "ADD_FAVORITE",
@@ -42,7 +20,7 @@ const PokemonCard = () => {
     })
   }
 
-  const pokemonData = pokemonDetails.map((pokemon) => {
+  const pokemonData = pokemons.map((pokemon) => {
     return (
       <div className="card text-center mx-auto" key={pokemon.id}>
         <div className="card-header">

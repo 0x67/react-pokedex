@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Switch, Route } from "react-router-dom";
 
 import { Loading } from './components' 
-import { Home, DetailPage, FavoritePokemon, Inventory } from './pages';
+import { Home, DetailPage, FavoritePokemon, Inventory, NotFoundPage } from './pages';
 
 const App = () => {
     const [isLoading, setLoading] = useState(true)
@@ -14,7 +14,7 @@ const App = () => {
     if(isLoading) {
         return <Loading/>
     }
-
+    
     return (
         <Switch>
             <Route exact path='/'>
@@ -29,6 +29,7 @@ const App = () => {
             <Route path='/pokemon/:id'>
                 <DetailPage/>
             </Route>
+            <Route component={NotFoundPage}/>
         </Switch>   
     )
 }
