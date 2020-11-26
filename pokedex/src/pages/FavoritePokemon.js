@@ -1,5 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux';
+import { BodyWrapper } from '../components'
 
 const FavoritePokemon = () => {
   const favorites = useSelector((state) => state.favoritePokemons)
@@ -26,11 +27,13 @@ const FavoritePokemon = () => {
   })
 
   return (
-    <div className="container">
-      <div className="card-columns">
-        {pokemons}
+    <BodyWrapper>
+      <div className="container">
+        <div className="card-columns">
+          {pokemons}
+        </div>
       </div>
-    </div>
+    </BodyWrapper>
   )
 }
 

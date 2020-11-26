@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { BodyWrapper } from '../components'
 
 const Inventory = () => {
   const inventories = useSelector((state) => state.inventory)
@@ -21,11 +22,13 @@ const Inventory = () => {
   })
 
   return (
-    <div className="container">
-      <div className="card-columns">
-        {pokemons}
+    <BodyWrapper>
+      <div className="container">
+        <div className="card-columns">
+          {pokemons}
+        </div>
       </div>
-    </div>
+    </BodyWrapper>
   )
 }
 

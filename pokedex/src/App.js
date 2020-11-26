@@ -16,22 +16,20 @@ const App = () => {
     }
 
     return (
-        <>
-            <Switch>
-                <Route exact path='/'>
-                    <Home/>
-                </Route>
-                <Route path='/favorite'>
-                    <FavoritePokemon/>
-                </Route>
-                <Route path='/inventory'>
-                    <Inventory/>
-                </Route>
-                <Route path='/pokemon/:id'>
-                    <DetailPage/>
-                </Route>
-            </Switch>   
-        </>
+        <Switch>
+            <Route exact path='/'>
+                <Home/>
+            </Route>
+            <Route path='/favorite'>
+                <FavoritePokemon/>
+            </Route>
+            <Route path='/inventory'>
+                <Inventory/>
+            </Route>
+            <Route path='/pokemon/:id'>
+                <DetailPage/>
+            </Route>
+        </Switch>   
     )
 }
 

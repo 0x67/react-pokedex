@@ -2,17 +2,15 @@ import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 
-import { PokemonCard } from './'
-
-const BodyWrapper = () => {
+const BodyWrapper = ({ children }) => {
   let [isActive, setActive] = useState('active')
 
   const [newPokemon, setPokemon] = useState({
       pokemonName: '',
-      hp: '',
-      attack: '',
-      defense: '',
-      speed: ''
+      hp: 1,
+      attack: 1,
+      defense: 1,
+      speed: 1
   })
 
   const dispatch = useDispatch()
@@ -22,6 +20,8 @@ const BodyWrapper = () => {
         type: "ADD_POKEMON",
         pokemon: newPokemon
     })
+
+    clearForm()
   }
 
   
@@ -36,10 +36,10 @@ const BodyWrapper = () => {
   const clearForm = () => {
     setPokemon({
         pokemonName: '',
-        hp: 0,
-        attack: 0,
-        defense: 0,
-        speed: 0
+        hp: 1,
+        attack: 1,
+        defense: 1,
+        speed: 1
     })
 }
   const handleToggle = () => {
@@ -49,7 +49,6 @@ const BodyWrapper = () => {
         setActive('')
     }
 }
-
   return (
     <div className="wrapper">
         <nav id="sidebar" className={isActive}>
@@ -113,7 +112,7 @@ const BodyWrapper = () => {
                             </div>
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-secondary"  onClick={() => clearForm()} data-dismiss="modal">Close</button>
-                                <button type="button" className="btn btn-primary" onClick={() => addPokemon()}>Throw Pokéball</button>
+                                <button type="button" className="btn btn-primary" onClick={() => addPokemon()} data-dismiss="modal">Throw Pokéball</button>
                             </div>
                             </div>
                         </div>
@@ -126,16 +125,28 @@ const BodyWrapper = () => {
                 </li>
 
                 <div className="modal fade" id="exampleModalCenter" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                    <div className="modal-dialog modal-dialog-centered" role="document">
+                    <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
                         <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalCenterTitle">Modal title</h5>
+                            <h5 className="modal-title" id="exampleModalCenterTitle" style={{color: "black"}}>About Poké Hack</h5>
                             <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div className="modal-body">
-                        
+                            <h5 style={{color: "black"}}>Credit:</h5>
+                            <h6 style={{color: "black"}} >
+                                <u style={{color: "blue"}}>
+                                    <a href="https://pokeapi.co/" target="_blank" rel="noreferrer">Pokémon API</a>
+                                </u>
+                                : For providing free Pokémon data with no charge.
+                            </h6>
+                            <h6 style={{color: "black"}} >
+                                <u style={{color: "blue"}}>
+                                    <a href="https://startbootstrap.com/template/simple-sidebar" target="_blank" rel="noreferrer">Start Bootstrap</a>
+                                </u>
+                                : For the sidebar template.
+                            </h6>
                         </div>
                     </div>
                     </div>
@@ -150,7 +161,9 @@ const BodyWrapper = () => {
                     <i className="fas fa-align-left"></i>
                 </button>
             </nav>
-            <PokemonCard/>
+
+            { children }
+            {/* <PokemonCard/> */}
         </div>
 
     </div>

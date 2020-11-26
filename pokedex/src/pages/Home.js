@@ -4,7 +4,9 @@ import { BodyWrapper, PokemonCard} from '../components'
 const Home = () => {
   return (
     <div>
-      <BodyWrapper/>
+      <BodyWrapper>
+        <PokemonCard/>
+      </BodyWrapper>
     </div>
   )
 }
